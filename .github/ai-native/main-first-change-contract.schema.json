@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/xhyperium/xhyper.rs/blob/main/.github/ai-native/main-first-change-contract.schema.json",
+  "title": "Main First Change Contract",
+  "description": "Append-only, versioned Goal/Spec/Evidence binding for one atomic pull request.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "change_id",
+    "goal",
+    "spec",
+    "evidence",
+    "change_type"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "change_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "spec": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "change_type": {
+      "type": "string",
+      "enum": [
+        "feature",
+        "fix",
+        "recovery",
+        "release",
+        "governance",
+        "docs",
+        "refactor",
+        "test",
+        "ci"
+      ]
+    }
+  }
+}

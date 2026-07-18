@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_id": "MAIN-FIRST-SANDBOX-001",
+  "policy_id": "MAIN-FIRST-001",
   "effective_at": "2026-07-19T00:00:00Z",
   "default_branch": "main",
   "ssot": ["code", "ci"],
