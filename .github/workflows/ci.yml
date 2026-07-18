@@ -17,5 +17,5 @@ jobs:
       - name: Check fmt
         run: |
           echo "fmt job running"
-          # Pass by default; will be toggled to fail for C-22 canary
-          exit 0
+          # C-22 canary: intentionally fail to trigger main-first FROZEN
+          exit 1
