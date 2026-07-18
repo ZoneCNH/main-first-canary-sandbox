@@ -1,0 +1,9 @@
+name: Main First State
+description: Classify main as GREEN, YELLOW, FROZEN, or RELEASED
+inputs:
+  sha:
+    description: Commit SHA to classify
+    required: true
+runs:
+  using: node24
+  main: index.mjs

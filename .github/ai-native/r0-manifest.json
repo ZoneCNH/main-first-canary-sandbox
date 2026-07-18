@@ -1,0 +1,5 @@
+{
+  "name": "r0-required-set",
+  "schema_version": 1,
+  "r0": ["fmt"]
+}

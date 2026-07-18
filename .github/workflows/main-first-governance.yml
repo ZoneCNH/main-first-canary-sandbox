@@ -1,0 +1,38 @@
+name: Main First Governance
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: "17 */6 * * *"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'schedule' && 'reconcile' || 'state' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  classify-main:
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_run' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      checks: read
+      statuses: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Classify current main
+        uses: ./.github/actions/main-state
+        with:
+          sha: ${{ github.event_name == 'schedule' && github.sha || github.event.workflow_run.head_sha }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "policy_id": "MAIN-FIRST-SANDBOX-001",
+  "effective_at": "2026-07-19T00:00:00Z",
+  "default_branch": "main",
+  "ssot": ["code", "ci"],
+  "merge": {
+    "method": "squash",
+    "allow_merge_commit": false,
+    "allow_rebase_merge": false,
+    "require_linear_history": true
+  },
+  "pull_request": {
+    "required_base": "main",
+    "contract": {
+      "schema_path": ".github/ai-native/main-first-change-contract.schema.json",
+      "roots": ["evidence/"],
+      "suffix": ".contract.json",
+      "max_bytes": 65536,
+      "require_added": true
+    },
+    "goal_roots": [".agent/specs/"],
+    "spec_roots": [".agent/specs/"],
+    "evidence_roots": ["evidence/", ".agent/specs/"],
+    "warning_open_hours": 72,
+    "max_open_hours": 168,
+    "require_changed_evidence": true,
+    "forbid_merge_commits": true
+  },
+  "trusted_contract": {
+    "context": "main-first-contract",
+    "workflow": ".github/workflows/main-first-contract.yml",
+    "event": "pull_request_target",
+    "activity_types": ["opened", "synchronize", "reopened"],
+    "binding": "repository_ruleset_required_workflow",
+    "executes_pr_code": false,
+    "reads_pr_body_for_authorization": false,
+    "activation_phase": "shadow",
+    "promotion_issue": null
+  },
+  "main_state": {
+    "context": "main-first/state",
+    "states": ["GREEN", "YELLOW", "FROZEN", "RELEASED"],
+    "release_tag_pattern": ".+-v[0-9].*",
+    "pr_required_manifest": ".github/ai-native/r0-manifest.json",
+    "required_checks": ["fmt"],
+    "frozen_allows_change_type": "recovery",
+    "incident_labels": ["main-first-incident", "main-frozen"],
+    "duplicate_required_check_policy": "fail_closed_frozen"
+  },
+  "ruleset": {
+    "require_pull_request": false,
+    "block_force_push": true,
+    "block_deletion": true,
+    "allow_bypass": false,
+    "require_required_checks": false,
+    "require_conversation_resolution": false,
+    "require_trusted_workflow_after_promotion": false
+  }
+}
