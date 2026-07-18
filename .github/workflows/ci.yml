@@ -17,5 +17,5 @@ jobs:
       - name: Check fmt
         run: |
           echo "fmt job running"
-          # C-22 canary: intentionally fail to trigger main-first FROZEN
-          exit 1
+          # C-23 recovery: fmt passing again, should close Incident #1
+          exit 0
